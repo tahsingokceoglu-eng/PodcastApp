@@ -1,0 +1,25 @@
+
+
+1. Gereksinim Analizi (GereksinimAnalizi.pdf)
+Bu dosyanın içine şunları başlıklar halinde yazabilirsin:
+
+PROJE AMACI
+Bu proje, kullanıcıların podcast veya müzik içeriklerini kategorize edilmiş bir şekilde listeleyebileceği, anlık arama yapabileceği ve tarayıcı üzerinden kesintisiz dinleyebileceği modern bir medya oynatıcı platformu oluşturmayı amaçlar.
+
+FONKSİYONEL GEREKSİNİMLER
+
+İçerik Listeleme: Sunucu tarafındaki (Python/Flask) veriler, arayüzde (HTML) dinamik olarak listelenmelidir.
+
+Canlı Arama (Filtreleme): Kullanıcı bir harf yazdığı anda liste yenilenmeden filtrelenmelidir.
+
+Medya Kontrolü: Kullanıcı seçtiği şarkıyı oynatabilmeli ve alt panelden kontrol edebilmelidir.
+
+Kategori Yönetimi: Şarkılar türlerine (Pop, Rap vb.) göre sınıflandırılabilmelidir.
+
+TEKNİK GEREKSİNİMLER
+
+Backend: Python 3.x ve Flask Framework.
+
+Frontend: HTML5, CSS3 (Modern Dark Theme), JavaScript (Vanilla JS).
+
+Veri Yapısı: Nesne Yönelimli Programlama (OOP) prensipleri.

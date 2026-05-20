@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Dinleme Paneli</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            padding-bottom: 180px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #1db954;
+            border-bottom: 2px solid #282828;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Flash Bildirim Mesajları */
+        .flash-mesajlar {
+            margin-bottom: 20px;
+        }
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .alert-success { background-color: #1db954; color: white; }
+        .alert-danger { background-color: #e91429; color: white; }
+
+        /* Arama Çubuğu Tasarımı */
+        .arama-kutusu {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 25px;
+            background-color: #242424;
+            border: 1px solid #383838;
+            border-radius: 25px;
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .arama-kutusu:focus {
+            border-color: #1db954;
+            box-shadow: 0 0 8px rgba(29, 185, 84, 0.5);
+        }
+
+        .podcast-kart {
+            background: #1e1e1e;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .podcast-kart:hover {
+            transform: translateY(-3px);
+            background: #252525;
+        }
+
+        .podcast-bilgi {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .podcast-resim {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1db954, #191414);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .tag {
+            background-color: #282828;
+            color: #1db954;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .sure-metni {
+            color: #b3b3b3;
+            font-size: 0.9em;
+            margin-right: 15px;
+        }
+
+        .sag-taraf {
+            display: flex;
+            align-items: center;
+        }
+
+        .oynat-buton {
+            background-color: #1db954;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s, scale 0.1s;
+        }
+
+        .oynat-buton:hover {
+            background-color: #1ed760;
+            scale: 1.05;
+        }
+
+        /* İndirme Formu Alanı */
+        .podcast-indir-formu {
+            background: #181818;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+            border: 1px solid #282828;
+        }
+
+        .podcast-indir-formu h3 {
+            color: #1db954;
+            margin-top: 0;
+        }
+
+        .podcast-indir-formu input, .podcast-indir-formu select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            background-color: #242424;
+            border: 1px solid #383838;
+            border-radius: 6px;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .podcast-indir-formu button {
+            background-color: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+
+        .podcast-indir-formu button:hover {
+            opacity: 0.9;
+        }
+
+        /* Alt Oynatıcı */
+        .oynatici-paneli {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #181818;
+            padding: 20px;
+            box-sizing: border-box;
+            border-top: 1px solid #282828;
+            text-align: center;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        audio {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 10px;
+        }
+
+        /* Efekt Dalgaları */
+        .wave-container {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 20px;
+            margin-left: 15px;
+            display: none;
+        }
+
+        .bar {
+            width: 3px;
+            height: 5px;
+            background-color: #1db954;
+            animation: bounce 0.5s ease infinite alternate;
+        }
+        .bar:nth-child(2) { animation-delay: 0.1s; }
+        .bar:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes bounce {
+            from { height: 5px; }
+            to { height: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎙️ {{ liste.liste_adi if liste else 'Kütüphanem' }}</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-mesajlar">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <input type="text" id="aramaBarı" class="arama-kutusu" onkeyup="podcastAra()" placeholder="Podcast başlığı veya sanatçı ara...">
+
+        <div class="podcast-listesi">
+            {% if liste and liste.podcastler %}
+                {% for podcast in liste.podcastler %}
+                <div class="podcast-kart">
+                    <div class="podcast-bilgi">
+                        <div class="podcast-resim">🎧</div>
+                        <div>
+                            <strong class="podcast-baslik" style="font-size: 1.1em; color: #fff;">{{ podcast.baslik }}</strong><br>
+                            <span class="podcast-sanatci" style="color: #b3b3b3; font-size: 0.9em;">{{ podcast.sanatci }}</span><br>
+                            <span class="tag">{{ podcast.kategori if podcast.kategori else 'Genel' }}</span>
+                        </div>
+                    </div>
+                    <div class="sag-taraf">
+                        <span class="sure-metni">⏱️ {{ podcast.sure if podcast.sure else 'Bilinmiyor' }}</span>
+                        <button class="oynat-buton" onclick="podcastOynat('{{ podcast.ses_yolu }}', '{{ podcast.baslik }}')">
+                            Oynat
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                {% for podcast in podcasts %}
+                <div class="podcast-kart">
+                    <div class="podcast-bilgi">
+                        <div class="podcast-resim">🎧</div>
+                        <div>
+                            <strong class="podcast-baslik" style="font-size: 1.1em; color: #fff;">{{ podcast.baslik }}</strong><br>
+                            <span class="podcast-sanatci" style="color: #b3b3b3; font-size: 0.9em;">{{ podcast.sanatci }}</span><br>
+                            <span class="tag">{{ podcast.kategori if podcast.kategori else 'Genel' }}</span>
+                        </div>
+                    </div>
+                    <div class="sag-taraf">
+                        <span class="sure-metni">⏱️ {{ podcast.sure if podcast.sure else 'Bilinmiyor' }}</span>
+                        <button class="oynat-buton" onclick="podcastOynat('{{ podcast.ses_yolu }}', '{{ podcast.baslik }}')">
+                            Oynat
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="podcast-indir-formu">
+            <h3>Yeni Podcast İndir ve Ekle</h3>
+            <form action="/indir-ve-ekle" method="POST">
+                <input type="text" name="baslik" placeholder="Podcast Başlığı" required>
+                <input type="text" name="sanatci" placeholder="Sanatçı / Yayıncı" required>
+                <input type="url" name="mp3_url" placeholder="MP3 İndirme Linki (URL)" required>
+                <select name="kategori">
+                    <option value="Genel">Genel</option>
+                    <option value="Teknoloji">Teknoloji</option>
+                    <option value="Müzik">Müzik</option>
+                </select>
+                <button type="submit">İndir ve Kütüphaneye Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="oynatici-paneli">
+        <span id="calan-bilgisi" style="font-weight: bold; color: #b3b3b3;">Şu an bir şey oynatılmıyor</span>
+        
+        <div class="wave-container" id="ses-dalgasi">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <br>
+        <audio id="ses-oynatici" controls></audio>
+    </div>
+
+    <script>
+        function podcastAra() {
+            const girdi = document.getElementById('aramaBarı').value.toLowerCase();
+            const kartlar = document.getElementsByClassName('podcast-kart');
+
+            for (let i = 0; i < kartlar.length; i++) {
+                const baslik = kartlar[i].querySelector('.podcast-baslik').innerText.toLowerCase();
+                const sanatci = kartlar[i].querySelector('.podcast-sanatci').innerText.toLowerCase();
+                
+                if (baslik.includes(girdi) || sanatci.includes(girdi)) {
+                    kartlar[i].style.display = "flex";
+                } else {
+                    kartlar[i].style.display = "none";
+                }
+            }
+        }
+
+        function podcastOynat(sesYolu, podcastBasligi) {
+            const oynatici = document.getElementById('ses-oynatici');
+            const bilgiEtiketi = document.getElementById('calan-bilgisi');
+            const dalga = document.getElementById('ses-dalgasi');
+
+            bilgiEtiketi.innerText = "Şu an oynatılıyor: " + podcastBasligi;
+            bilgiEtiketi.style.color = "#1db954";
+            dalga.style.display = "inline-flex";
+
+            // URL çakışmasını engellemek için başına '/' ekliyoruz
+            if (!sesYolu.startsWith('/')) {
+                sesYolu = '/' + sesYolu;
+            }
+            oynatici.src = sesYolu;
+            
+            oynatici.play().catch(function(error) {
+                console.log("Oynatma Hatası:", error);
+                alert("Ses dosyası oynatılamadı! Lütfen mp3 dosyasının projenizdeki 'static/sounds/' klasörünün altında ve isminin doğru olduğundan emin olun.");
+                dalga.style.display = "none";
+            });
+
+            oynatici.onpause = () => { dalga.style.display = "none"; };
+            oynatici.onplay = () => { dalga.style.display = "inline-flex"; };
+        }
+    </script>
+</body>
+</html>

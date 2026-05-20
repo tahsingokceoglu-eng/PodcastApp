@@ -1,0 +1,24 @@
+SINIF YAPISI (CLASS DIAGRAM DESCRIPTION)
+Proje iki temel sınıftan oluşmaktadır:
+
+Podcast Sınıfı:
+
+Değişkenler: baslik (String), sanatci (String), ses_yolu (String), sure (String), kategori (String).
+
+Amacı: Her bir medya içeriğini kapsüller.
+
+OynatmaListesi Sınıfı:
+
+Değişkenler: liste_adi (String), podcastler (List).
+
+Metotlar: podcast_ekle(Podcast) -> Yeni şarkı nesnelerini listeye dahil eder.
+
+SİSTEM AKIŞI (SEQUENCE)
+
+Kullanıcı web sayfasını talep eder.
+
+Flask sunucusu (app.py), models.py üzerinden nesneleri oluşturur.
+
+Jinja2 motoru verileri HTML şablonuna yerleştirir.
+
+JavaScript, kullanıcı etkileşimlerini (arama ve oynatma) istemci tarafında yönetir.
