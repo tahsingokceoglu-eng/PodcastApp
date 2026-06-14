@@ -1,24 +1,43 @@
-SINIF YAPISI (CLASS DIAGRAM DESCRIPTION)
-Proje iki temel sınıftan oluşmaktadır:
+@startuml
+title Kullanım Senaryosu (Use Case Diagram)
+left to right direction
+actor "Kullanıcı" as User
 
-Podcast Sınıfı:
+package "Podcast & Müzik Paneli" {
+  usecase "Listeyi Görüntüle" as UC1
+  usecase "Podcast/Müzik Ara" as UC2
+  usecase "Müzik Oynat" as UC3
+  usecase "Yeni Podcast Ekle" as UC4
+  usecase "URL Geçerliliğini Kontrol Et" as UC5
+}
 
-Değişkenler: baslik (String), sanatci (String), ses_yolu (String), sure (String), kategori (String).
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
 
-Amacı: Her bir medya içeriğini kapsüller.
+UC4 ..> UC5 : <<include>>
+@enduml
 
-OynatmaListesi Sınıfı:
 
-Değişkenler: liste_adi (String), podcastler (List).
+@startuml
+title Sınıf Diyagramı (Class Diagram)
 
-Metotlar: podcast_ekle(Podcast) -> Yeni şarkı nesnelerini listeye dahil eder.
+class Podcast {
+  - baslik: String
+  - sanatci: String
+  - ses_yolu: String
+  - kategori: String
+  - sure: String
+  + bilgileri_getir(): Dictionary
+}
 
-SİSTEM AKIŞI (SEQUENCE)
+class PodcastListesi {
+  - liste_adi: String
+  - podcastler: List<Podcast>
+  + podcast_ekle(podcast: Podcast): void
+  + listeyi_getir(): List<Podcast>
+}
 
-Kullanıcı web sayfasını talep eder.
-
-Flask sunucusu (app.py), models.py üzerinden nesneleri oluşturur.
-
-Jinja2 motoru verileri HTML şablonuna yerleştirir.
-
-JavaScript, kullanıcı etkileşimlerini (arama ve oynatma) istemci tarafında yönetir.
+PodcastListesi "1" *-- "many" Podcast : içerir >
+@enduml

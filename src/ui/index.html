@@ -27,10 +27,7 @@
             margin-bottom: 20px;
         }
 
-        /* Flash Bildirim Mesajları */
-        .flash-mesajlar {
-            margin-bottom: 20px;
-        }
+        .flash-mesajlar { margin-bottom: 20px; }
         .alert {
             padding: 12px;
             border-radius: 6px;
@@ -40,7 +37,6 @@
         .alert-success { background-color: #1db954; color: white; }
         .alert-danger { background-color: #e91429; color: white; }
 
-        /* Arama Çubuğu Tasarımı */
         .arama-kutusu {
             width: 100%;
             padding: 12px 20px;
@@ -54,7 +50,6 @@
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
         }
-
         .arama-kutusu:focus {
             border-color: #1db954;
             box-shadow: 0 0 8px rgba(29, 185, 84, 0.5);
@@ -71,7 +66,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.4);
             transition: transform 0.2s, background 0.2s;
         }
-
         .podcast-kart:hover {
             transform: translateY(-3px);
             background: #252525;
@@ -112,10 +106,7 @@
             margin-right: 15px;
         }
 
-        .sag-taraf {
-            display: flex;
-            align-items: center;
-        }
+        .sag-taraf { display: flex; align-items: center; }
 
         .oynat-buton {
             background-color: #1db954;
@@ -127,13 +118,8 @@
             cursor: pointer;
             transition: background 0.2s, scale 0.1s;
         }
+        .oynat-buton:hover { background-color: #1ed760; scale: 1.05; }
 
-        .oynat-buton:hover {
-            background-color: #1ed760;
-            scale: 1.05;
-        }
-
-        /* İndirme Formu Alanı */
         .podcast-indir-formu {
             background: #181818;
             padding: 20px;
@@ -141,12 +127,7 @@
             margin-top: 40px;
             border: 1px solid #282828;
         }
-
-        .podcast-indir-formu h3 {
-            color: #1db954;
-            margin-top: 0;
-        }
-
+        .podcast-indir-formu h3 { color: #1db954; margin-top: 0; }
         .podcast-indir-formu input, .podcast-indir-formu select {
             width: 100%;
             padding: 10px;
@@ -157,7 +138,6 @@
             color: white;
             box-sizing: border-box;
         }
-
         .podcast-indir-formu button {
             background-color: #ffffff;
             color: #000000;
@@ -167,14 +147,9 @@
             font-weight: bold;
             cursor: pointer;
             width: 100%;
-            transition: opacity 0.2s;
         }
+        .podcast-indir-formu button:hover { opacity: 0.9; }
 
-        .podcast-indir-formu button:hover {
-            opacity: 0.9;
-        }
-
-        /* Alt Oynatıcı */
         .oynatici-paneli {
             position: fixed;
             bottom: 0;
@@ -188,14 +163,8 @@
             box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
             z-index: 1000;
         }
+        audio { width: 80%; max-width: 600px; margin-top: 10px; }
 
-        audio {
-            width: 80%;
-            max-width: 600px;
-            margin-top: 10px;
-        }
-
-        /* Efekt Dalgaları */
         .wave-container {
             display: inline-flex;
             align-items: flex-end;
@@ -204,7 +173,6 @@
             margin-left: 15px;
             display: none;
         }
-
         .bar {
             width: 3px;
             height: 5px;
@@ -333,15 +301,15 @@
             bilgiEtiketi.style.color = "#1db954";
             dalga.style.display = "inline-flex";
 
-            // URL çakışmasını engellemek için başına '/' ekliyoruz
-            if (!sesYolu.startsWith('/')) {
+            if (!sesYolu.startsWith('http') && !sesYolu.startsWith('/')) {
                 sesYolu = '/' + sesYolu;
             }
+
             oynatici.src = sesYolu;
             
             oynatici.play().catch(function(error) {
                 console.log("Oynatma Hatası:", error);
-                alert("Ses dosyası oynatılamadı! Lütfen mp3 dosyasının projenizdeki 'static/sounds/' klasörünün altında ve isminin doğru olduğundan emin olun.");
+                alert("Ses dosyası oynatılamadı! Lütfen internet bağlantınızı kontrol edin.");
                 dalga.style.display = "none";
             });
 

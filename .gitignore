@@ -1,4 +1,22 @@
-__pycache__/
-*.pyc
-venv/
-.DS_Store
+# Projeyi başlatma
+git init
+
+# 1. Commit: Klasör yapısı ve dokümanlar
+git add docs/ .gitignore
+git commit -m "feat: proje dokumanlari ve gitignore eklendi"
+
+# 2. Commit: OOP Modelleri
+git add src/core/models.py
+git commit -m "feat: OOP standartlarina uygun core modeller tanimlandi"
+
+# 3. Commit: Backend Sunucusu
+git add app.py
+git commit -m "feat: Flask sunucusu ve hata yonetimi entegre edildi"
+
+# 4. Commit: Frontend Tasarımı
+git add src/ui/index.html assets/
+git commit -m "feat: Spotify temali arayuz ve canli arama tamamlandi"
+
+# 5. Commit: Dokümantasyonun Kapatılması
+git add README.md
+git commit -m "docs: kurulum ve calistirma talimatlari README'ye eklendi"
