@@ -49,8 +49,8 @@ PodcastApp/
 │   └── ui/
 │       └── index.html            # Dinamik Jinja2 HTML şablonu
 │
-├── static/
-│   └── sounds/                   # İndirilen yerel mp3 dosyaları
+├── 
+│                    
 │
 └── README.md                     # Proje dokümantasyonu
 pip install Flask
